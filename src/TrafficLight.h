@@ -10,8 +10,8 @@
 class Vehicle;
 
 enum TrafficLightPhase {
-    red = "red",
-    green = "green"
+    red,
+    green
 };
 
 // FP.3 Define a class „MessageQueue“ which has the public methods send and receive. 
