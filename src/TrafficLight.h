@@ -38,7 +38,7 @@ class TrafficLight : public TrafficObject
 {
 public:
     // constructor / destructor
-    TrafficLight() : _currentPhase(TrafficLightPhase::red) {}
+    TrafficLight();
 
     // getters / setters
     TrafficLightPhase getCurrentPhase();

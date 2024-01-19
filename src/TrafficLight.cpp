@@ -1,10 +1,11 @@
 #include <iostream>
 #include <random>
+#include <thread>
 #include "TrafficLight.h"
 
 /* Implementation of class "MessageQueue" */
 
-/* 
+/*
 template <typename T>
 T MessageQueue<T>::receive()
 {
@@ -23,7 +24,6 @@ void MessageQueue<T>::send(T &&msg)
 
 /* Implementation of class "TrafficLight" */
 
-/* 
 TrafficLight::TrafficLight()
 {
     _currentPhase = TrafficLightPhase::red;
@@ -52,7 +52,40 @@ void TrafficLight::cycleThroughPhases()
     // FP.2a : Implement the function with an infinite loop that measures the time between two loop cycles 
     // and toggles the current phase of the traffic light between red and green and sends an update method 
     // to the message queue using move semantics. The cycle duration should be a random value between 4 and 6 seconds. 
-    // Also, the while-loop should use std::this_thread::sleep_for to wait 1ms between two cycles. 
+    // Also, the while-loop should use std::this_thread::sleep_for to wait 1ms between two cycles.
+    
+    // Required setup for generating a random number between 400 and 6000
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> distr(4000, 6000);
+    
+    // Init variable for start of current cycle
+    std::chrono::system_clock::time_point cycleStart = std::chrono::system_clock::now();
+  
+    // Generate a random time duration between 4 and 6 seconds
+    int cycleDuration = distr(gen);
+    
+    while(true) {
+      // Get time point for now
+      std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+      
+      // Get time since cycle started
+      std::chrono::system_clock::duration diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - cycleStart).count();
+      
+      if (diff > cycleDuration) {
+        // Switch light phase
+        _currentPhase = _currentPhase == TrafficLightPhase::red ? TrafficLightPhase::green : TrafficLightPhase::red;
+        
+        // Generate a new random time duration between 4 and 6 seconds for the next cycle
+        cycleDuration = distr(gen);
+        
+        // Reset the cycle start time (as we're starting a new cycle)
+        cycleStart = std::chrono::system_clock::now();
+        
+        // TODO: Send an update method to the message queue using move semantics
+      }
+      
+      // Sleep for 1ms
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
 }
-
-*/
