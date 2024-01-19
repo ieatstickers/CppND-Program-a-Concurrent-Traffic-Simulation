@@ -14,8 +14,7 @@ T MessageQueue<T>::receive()
     // The received object should then be returned by the receive function.
     std::unique_lock<std::mutex> lock(_mtx);
     _cond.wait(lock, [this] { return !_queue.empty(); });
-    TrafficLightPhase* phase = std::move(_queue.begin());
-    return *phase;
+    return std::move(*_queue.begin());
 }
 
 template <typename T>
