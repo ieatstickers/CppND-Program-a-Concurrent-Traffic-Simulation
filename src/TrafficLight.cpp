@@ -86,8 +86,6 @@ void TrafficLight::cycleThroughPhases()
         // Switch light phase
         _currentPhase = _currentPhase == TrafficLightPhase::red ? TrafficLightPhase::green : TrafficLightPhase::red;
         
-        std::cout << "Current phase changing to " << _currentPhase << " on thread " << std::this_thread::get_id() << "\n";
-        
         // Generate a new random time duration between 4 and 6 seconds for the next cycle
         cycleDuration = distr(gen);
         
