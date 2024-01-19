@@ -71,7 +71,7 @@ void TrafficLight::cycleThroughPhases()
       std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
       
       // Get time since cycle started
-      std::chrono::system_clock::duration diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - cycleStart).count();
+      long int diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - cycleStart).count();
       
       if (diff > cycleDuration) {
         // Switch light phase
