@@ -85,7 +85,8 @@ void TrafficLight::cycleThroughPhases()
         // Reset the cycle start time (as we're starting a new cycle)
         cycleStart = std::chrono::system_clock::now();
         
-        // TODO: Send an update method to the message queue using move semantics
+        // Send an update method to the message queue using move semantics
+        _queue.send(std::move(_currentPhase));
       }
       
       // Sleep for 1ms
